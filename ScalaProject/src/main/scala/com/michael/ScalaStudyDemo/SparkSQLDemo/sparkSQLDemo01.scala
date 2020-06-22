@@ -16,6 +16,7 @@ object sparkSQLDemo01 {
 
     val rdd = spark.sparkContext.makeRDD(Array(("michael",17),("nika",18),("gaga",19)))
 
+
     val df = rdd.toDF("name","age")
 //
 
@@ -26,6 +27,9 @@ object sparkSQLDemo01 {
 
     df1.createOrReplaceTempView("student")
 
+
+//    spark.createDataFrame(Array(("michael",17),("nika",18),("gaga",19)))
+
 //
 //    df.printSchema()
 //
@@ -33,7 +37,9 @@ object sparkSQLDemo01 {
 //
 //    rdd1
 //
-    spark.sql("select * from student").show
+    val df2 = spark.sql("select * from student")
+
+    df2.collect()
 
 
 //    val ds = rdd.map(x => {

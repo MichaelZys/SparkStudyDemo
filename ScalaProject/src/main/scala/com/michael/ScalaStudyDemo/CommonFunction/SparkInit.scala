@@ -25,8 +25,8 @@ object SparkInit{
 
   def getSparkSession(): SparkSession ={
 
-    System.setProperty("HADOOP_USER_NAME", "hadoop")
-    System.setProperty("user.name", "root")
+//    System.setProperty("HADOOP_USER_NAME", "hadoop")
+//    System.setProperty("user.name", "root")
 
     val conf = new SparkConf
 
@@ -40,6 +40,8 @@ object SparkInit{
 //    conf.set("hive.execution.engine", "mr")
 
     println(System.getProperty("os.name"))
+
+
 
     //如果运行在本地, 就是local[*]
     //
@@ -55,7 +57,8 @@ object SparkInit{
     if (InetAddress.getLocalHost.getHostName.contains("SMART")) {
       conf.set("hive.metastore.uris", "thrift://10.10.17.11:9083")
     }
-    else if(InetAddress.getLocalHost.getHostName.contains("gaialab")){
+//    else if(InetAddress.getLocalHost.getHostName.contains("gaialab")){
+      else{
       conf.set("hive.metastore.uris", "thrift://192.168.0.103:9083")
     }
 

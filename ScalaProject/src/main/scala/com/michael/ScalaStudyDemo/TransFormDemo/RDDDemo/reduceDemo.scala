@@ -19,6 +19,8 @@ object reduceDemo {
     println(rdd.reduce(_+_))
 
     val rdd1 = spark.sparkContext.makeRDD(Array(("a",1),("a",3),("c",3),("d",5)))
+
+    rdd.collect()
     println(rdd1.reduce((x, y) => (x._1 + y._1, x._2 + y._2)))
 
   }
