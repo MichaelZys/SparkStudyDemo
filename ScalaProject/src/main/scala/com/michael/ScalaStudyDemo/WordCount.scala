@@ -9,27 +9,23 @@ object WordCount {
 
   def main(args: Array[String]): Unit = {
 
-//    val conf = new SparkConf
+    //    val conf = new SparkConf
 
     val spark = SparkSession
-      .builder().appName("wordcount").master("local[*]")
-        .config("spark.executor.heartbeatInterval","119")
-//      .config(conf)
+      .builder().appName("wordcount").master("local[1]")
+      //        .config("spark.executor.heartbeatInterval","119")
+      //      .config(conf)
       .enableHiveSupport()
       .getOrCreate()
 
+    import spark.implicits._
 
-    val rdd : RDD[String] = spark.sparkContext.makeRDD(Array("Hello word","Hello scala")
 
-//
-//    val pairRDD = rdd.flatMap(x=>x.split(" "))
-//    val mapRDD = pairRDD.map(x=>(x,1))
-//
-//    val reduceRDD = mapRDD.reduceByKey(_+_)
-//
-//    reduceRDD.collect()
+    val rdd = spark.sparkContext.makeRDD(Array("Hello word", "Hello scala"))
 
-    rdd.flatMap(x=>x.split(" ")).map(x=>(x,1)).reduceByKey((x,y)=>x+y).collect().foreach(println)
+    val mapRDD = rdd.flatMap(x => x.split(" ")).map(x => (x, 1)).reduceByKey((x, y) => x + y)
+
+    mapRDD.collect().foreach(println)
 
     spark.stop()
   }
